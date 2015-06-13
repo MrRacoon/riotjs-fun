@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Riot! JS App</title>
+
+        <!-- bower:css -->
+        <!-- endbower -->
+
+        <!-- inject:css -->
+        <!-- endinject -->
+    </head>
+    <body>
+        <h1>Riot! JS App</h1>
+
+        <person-card name="erik" img="images/erik.jpg" desc="a description of erik">
+        </person-card>
+
+        <!-- bower:js -->
+        <!-- endbower -->
+
+        <!-- inject:js -->
+        <!-- endinject -->
+
+        <script type="text/javascript">
+
+            var loadJson = function (theTag) {
+                var req = new XMLHttpRequest();
+                console.log('function called');
+                req.open('GET', 'data/stuff.json', true);
+                req.onload = function () {
+                    console.log(req.status);
+                    if(req.status == 200) {
+                        console.log('data got from disk');
+                        var data = JSON.parse(req.responseText);
+                        theTag.trigger('data_loaded', data.list);
+                    }
+                }
+                req.send();
+            }
+
+
+            riot.mount('*', { load: loadJson })
+        </script>
+    </body>
+</html>
