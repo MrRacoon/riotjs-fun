@@ -5,7 +5,7 @@ This project has little to no use other than for me to play with and learn [riot
 
 **Why RiotJS?**
 
-I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as I was doing my research I stumbled on [riot][riotjs] and I was pretty blown away. Something about it resonates with my morals about programming.
+I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as I was doing my research I stumbled on riot and I was pretty blown away. Something about it resonates with my morals about programming.
 
 **Notable Milestones:**
 * Riotjs compilation
@@ -27,10 +27,7 @@ Gulp is super cool and is slowly becoming my choice of build tool for web applic
 The source to distribution mentality and what goes into converting your code to become production ready. Minimizing, uglifying, concatenating, compressing. All things I am starting to get a strong mental model for.
 
 [grunt]:  http://gruntjs.com "Grunt build tool"
-
 [gulp]:   http://gulpjs.com "Gulp build tool"
-
 [riotjs]: https://muut.com/riotjs/ "A react like UI library"
-
 [reactjs]: https://facebook.github.io/react/ "JavaScript library for building user interfaces"
 
