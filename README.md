@@ -5,8 +5,7 @@ This project has little to no use other than for me to play with and learn [riot
 
 **Why RiotJS?**
 
-I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as I was doing my research I stumbled on [riot][riotjs] and I was pretty blown away. Something about it resonates with my morals about programming, if you will.
-
+I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as I was doing my research I stumbled on [riot][riotjs] and I was pretty blown away. Something about it resonates with my morals about programming.
 
 **Notable Milestones:**
 * Riotjs compilation
