@@ -27,11 +27,9 @@ Gulp is super cool and is slowly becoming my choice of build tool for web applic
 
 The source to distribution mentality and what goes into converting your code to become production ready. Minimizing, uglifying, concatenating, compressing. All things I am starting to get a strong mental model for.
 
-[grunt]:  http://gruntjs.com \
-    "Grunt build tool"
+[grunt]:  http://gruntjs.com "Grunt build tool"
 
-[gulp]:   http://gulpjs.com \
-    "Gulp build tool"
+[gulp]:   http://gulpjs.com "Gulp build tool"
 
 [riotjs]: https://muut.com/riotjs/ "A react like UI library"
 
