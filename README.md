@@ -1,8 +1,7 @@
 RIOT-JS sandboxing
 =================
 
-**Description**
-This project has little to no use other than for me to play with and learn riotJs, gulp, and building a web application from scratch.
+This project has little to no use other than for me to play with and learn riotJs, [gulp][gulp]k, and building a web application from scratch.
 
 **Notable Milestones:**
 * Riotjs compilation
