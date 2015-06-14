@@ -84,7 +84,8 @@ gulp.task('index', function () {
             }
         ))
 
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist'))
+        .pipe(livereload());
 });
 
 // Handle the bower controlled scripts
@@ -149,6 +150,7 @@ gulp.task('watch', function () {
     gulp.watch('app/scripts/**', ['scripts']);
     gulp.watch('app/styles/**' , ['styles']);
     gulp.watch('app/images/**' , ['images']);
+    gulp.watch('app/index.html' , ['index']);
 
 });
 

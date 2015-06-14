@@ -10,14 +10,15 @@ I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as 
 **Notable Milestones:**
 * Riotjs compilation
 * http-server going with appropriate watches
+* Live reloading of the sandbox on change
 * Gulp build to dist
     * minify, uglify, and concat javascript
     * Handles bower dependencies using wiredep
     * Injects source files into index
     * compress images
 
-**Needs:**
-* live reloading
+
+
 
 **What I've learned**
 
