@@ -9,6 +9,7 @@ I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as 
 
 **Notable Milestones:**
 * Riotjs compilation
+* http-server going with appropriate watches
 * Gulp build to dist
     * minify, uglify, and concat javascript
     * Handles bower dependencies using wiredep
@@ -16,7 +17,7 @@ I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as 
     * compress images
 
 **Needs:**
-* Get the watch command to properly handle rebuilds and automatic reloading of the source
+* live reloading
 
 **What I've learned**
 

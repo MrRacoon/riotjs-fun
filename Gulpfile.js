@@ -1,11 +1,11 @@
 /* Main runners */
-var gulp       = require('gulp');
-var lrserver   = require('tiny-lr');
-var livereload = require('gulp-livereload');
-var connect    = require('connect');
-var lrs        = lrserver();
-var jslint     = require('gulp-jslint');
+var gulp        = require('gulp');
+var livereload  = require('gulp-livereload');
+var jslint      = require('gulp-jslint');
 var runSequence = require('run-sequence');
+var http        = require('gulp-webserver');
+
+var watch      = require('gulp-watch');
 
 var plugins    = require('gulp-load-plugins')();
 
@@ -31,7 +31,8 @@ var riot       = require('gulp-riot'),
 var paths      = {
     scripts    : ['app/scripts/**/*.js', 'app/scripts/**/*.tag'],
     styles     : ['app/styles/**/*.css', 'app/styles/**/*.less'],
-    images     : ['app/images/**/*']
+    images     : ['app/images/**/*'],
+    index      : 'app/index.html'
 };
 var dest       = {
     scripts    : 'dist/scripts',
@@ -48,44 +49,44 @@ gulp.task('clean', function (next) {
 gulp.task('index', function () {
     var options = { };
     var src = dest.scripts + '/*.js'
-    gulp.src('app/index.html')
+    gulp.src(paths.index)
 
-    //.pipe(wiredep.stream({
-    //    fileTypes: {
-    //        html: {
-    //            replace: {
-    //                js: function(filePath) {
-    //                    return '<script src="' + 'vendor/' + filePath.split('/').pop() + '"></script>';
-    //                },
-    //                css: function(filePath) {
-    //                    return '<link rel="stylesheet" href="' + 'vendor/' + filePath.split('/').pop() + '"/>';
-    //                }
-    //            }
-    //        }
-    //    }
-    //}))
+        //.pipe(wiredep.stream({
+        //    fileTypes: {
+        //        html: {
+        //            replace: {
+        //                js: function(filePath) {
+        //                    return '<script src="' + 'vendor/' + filePath.split('/').pop() + '"></script>';
+        //                },
+        //                css: function(filePath) {
+        //                    return '<link rel="stylesheet" href="' + 'vendor/' + filePath.split('/').pop() + '"/>';
+        //                }
+        //            }
+        //        }
+        //    }
+        //}))
 
-    // Inject all js files into the index html app
-    .pipe(inject(
-        gulp.src(src, { read: false }), {
-            addRootSlash: false,
-            transform: function(filePath, file, i, length) {
-                return '<script src="' + filePath.replace('dist/', '') + '"></script>';
+        // Inject all javascript files into the index html app
+        .pipe(inject(
+            gulp.src(src, { read: false }), {
+                addRootSlash: false,
+                transform: function(filePath, file, i, length) {
+                    return '<script src="' + filePath.replace('dist/', '') + '"></script>';
+                }
             }
-        }
-    ))
+        ))
 
-    // Inject all css files into the index html app
-    .pipe(inject(
-        gulp.src([dest.styles + '/*.css'], { read: false }), {
-            addRootSlash: false,
-            transform: function(filePath, file, i, length) {
-                return '<link rel="stylesheet" href="' + filePath.replace('dist/', '') + '"/>';
+        // Inject all css files into the index html app
+        .pipe(inject(
+            gulp.src([dest.styles + '/*.css'], { read: false }), {
+                addRootSlash: false,
+                transform: function(filePath, file, i, length) {
+                    return '<link rel="stylesheet" href="' + filePath.replace('dist/', '') + '"/>';
+                }
             }
-        }
-    ))
+        ))
 
-    .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist'));
 });
 
 // Handle the bower controlled scripts
@@ -112,24 +113,39 @@ gulp.task('scripts', function () {
         //.pipe(jslint())
         .pipe(uglify())
         .pipe(concat('scripts.min.js'))
-        .pipe(gulp.dest(dest.scripts))
+        .pipe(gulp.dest(dest.scripts));
 });
 
 // Handle the styles
 gulp.task('styles', function () {
     return gulp.src(paths.styles)
-        .pipe(less())
+        .pipe(less()).on('error', console.log)
         .pipe(concat('styles.min.css'))
-        .pipe(gulp.dest(dest.styles))
+        .pipe(gulp.dest(dest.styles));
 });
 
 // Handle the Images
 gulp.task('images', function () {
     return gulp.src(paths.images)
         .pipe(imagemin({optimizationLevel: 5}))
-        .pipe(gulp.dest(dest.images))
+        .pipe(gulp.dest(dest.images));
 });
 
+gulp.task('server', function () {
+    return gulp.src('dist')
+    .pipe(http(
+        {
+            liveReload: true,
+            open: true
+        }
+    ))
+});
+
+gulp.task('watch', function () {
+    watch('app/**', { verbose: true }, function () {
+        runSequence('build');
+    });
+});
 
 // Clean and build
 gulp.task('build', function () {
@@ -137,37 +153,11 @@ gulp.task('build', function () {
         'clean',
         ['styles', 'scripts', 'images'],
         ['bower-scripts', 'bower-styles'],
-        'index'
+        ['index']
+
     );
 });
 
-function reBuild(target) {
-    return function () {
-        gulp.run(target);
-    };
-}
-
-gulp.task('watch', function () {
-    gulp.watch(paths.index  , [  'index' ], reBuild( 'index' ));
-    gulp.watch(paths.scripts, [ 'scripts'], reBuild('scripts'));
-    gulp.watch(paths.styles , [ 'styles' ], reBuild('styles' ));
-    gulp.watch(paths.images , [ 'images' ], reBuild('images' ));
-});
-
-// start livereload server
-gulp.task('lr-server', function() {
-    lrs.listen(35729, function(err) {
-        if (err) return console.log(err);
-    });
-});
-
-// start local http server for development
-gulp.task('http-server', function() {
-    connect()
-    .use(require('connect-livereload')())
-    .use(connect.static(DIST_DIR))
-    .listen(WEB_PORT);
-});
 
 // start local http server with watch and livereload set up
-gulp.task('default', ['lr-server', 'build', 'http-server']);
+gulp.task('default', ['build', 'watch', 'server']);
