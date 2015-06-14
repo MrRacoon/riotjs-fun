@@ -5,25 +5,23 @@ var jslint      = require('gulp-jslint');
 var runSequence = require('run-sequence');
 var http        = require('gulp-webserver');
 
-var watch      = require('gulp-watch');
+var plugins     = require('gulp-load-plugins')();
 
-var plugins    = require('gulp-load-plugins')();
-
-var WEB_PORT   = 9000;
-var APP_DIR    = 'app';
-var DIST_DIR   = 'dist';
+var WEB_PORT    = 9000;
+var APP_DIR     = 'app';
+var DIST_DIR    = 'dist';
 
 /* Build steps */
-var wiredep    = require('wiredep');
-var uglify     = require('gulp-uglify'),
-    clean      = require('rimraf'),
-    concat     = require('gulp-concat'),
-    imagemin   = require('gulp-imagemin'),
-    inject     = require('gulp-inject');
+var wiredep     = require('wiredep');
+var uglify      = require('gulp-uglify'),
+    clean       = require('rimraf'),
+    concat      = require('gulp-concat'),
+    imagemin    = require('gulp-imagemin'),
+    inject      = require('gulp-inject');
 
 /* Compilers */
-var riot       = require('gulp-riot'),
-    less       = require('gulp-less');
+var riot        = require('gulp-riot'),
+    less        = require('gulp-less');
 // var coffee     = require('gulp-coffee');
 
 
@@ -113,7 +111,8 @@ gulp.task('scripts', function () {
         //.pipe(jslint())
         .pipe(uglify())
         .pipe(concat('scripts.min.js'))
-        .pipe(gulp.dest(dest.scripts));
+        .pipe(gulp.dest(dest.scripts))
+        .pipe(livereload());
 });
 
 // Handle the styles
@@ -121,14 +120,16 @@ gulp.task('styles', function () {
     return gulp.src(paths.styles)
         .pipe(less()).on('error', console.log)
         .pipe(concat('styles.min.css'))
-        .pipe(gulp.dest(dest.styles));
+        .pipe(gulp.dest(dest.styles))
+        .pipe(livereload());
 });
 
 // Handle the Images
 gulp.task('images', function () {
     return gulp.src(paths.images)
         .pipe(imagemin({optimizationLevel: 5}))
-        .pipe(gulp.dest(dest.images));
+        .pipe(gulp.dest(dest.images))
+        .pipe(livereload());
 });
 
 gulp.task('server', function () {
@@ -142,9 +143,13 @@ gulp.task('server', function () {
 });
 
 gulp.task('watch', function () {
-    watch('app/**', { verbose: true }, function () {
-        runSequence('build');
-    });
+
+    livereload.listen();
+
+    gulp.watch('app/scripts/**', ['scripts']);
+    gulp.watch('app/styles/**' , ['styles']);
+    gulp.watch('app/images/**' , ['images']);
+
 });
 
 // Clean and build
@@ -158,6 +163,11 @@ gulp.task('build', function () {
     );
 });
 
-
 // start local http server with watch and livereload set up
-gulp.task('default', ['build', 'watch', 'server']);
+gulp.task('default', function () {
+    runSequence(
+        'build',
+        ['watch', 'server']
+    );
+});
+
