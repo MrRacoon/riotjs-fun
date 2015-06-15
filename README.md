@@ -7,6 +7,26 @@ This project has little to no use other than for me to play with and learn [riot
 
 I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as I was doing my research I stumbled on riot and I was pretty blown away. Something about it resonates with my morals about programming.
 
+**How to use this sandbox**
+
+To get started clone this repository, change into the directory and install all of the dependencies using [npm][npm] and [bower][bower]
+
+```bash
+
+git clone https://github.com/MrRacoon/riotjs-sandbox.git
+cd riotjs-sandbox
+npm install && bower install
+
+```
+
+To compile, start the server, and update on changes, you need to run gulp
+
+```bash
+
+gulp
+
+```
+
 **Notable Milestones:**
 * Riotjs compilation
 * http-server going with appropriate watches
@@ -16,9 +36,6 @@ I love simplicity. I really wanted to learn [reactjs][reactjs] recently, but as 
     * Handles bower dependencies using wiredep
     * Injects source files into index
     * compress images
-
-
-
 
 **What I've learned**
 
@@ -32,4 +49,5 @@ The source to distribution mentality and what goes into converting your code to 
 [gulp]:   http://gulpjs.com "Gulp build tool"
 [riotjs]: https://muut.com/riotjs/ "A react like UI library"
 [reactjs]: https://facebook.github.io/react/ "JavaScript library for building user interfaces"
-
+[npm]: https://www.npmjs.com/ "Node Package Manager"
+[bower]: http://bower.io "Package Manager for the web"
