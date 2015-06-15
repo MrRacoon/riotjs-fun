@@ -19,13 +19,15 @@ npm install && bower install
 
 ```
 
-To compile, start the server, and update on changes, you need to run gulp
+To compile, start the server, and update on changes, you need to run gulp.
 
 ```bash
 
 gulp
 
 ```
+
+This should have opened up your default browser and displayed the initial sandbox page. I use a [livereload plugin][livereload] in chrome.
 
 **Notable Milestones:**
 * Riotjs compilation
@@ -51,3 +53,4 @@ The source to distribution mentality and what goes into converting your code to 
 [reactjs]: https://facebook.github.io/react/ "JavaScript library for building user interfaces"
 [npm]: https://www.npmjs.com/ "Node Package Manager"
 [bower]: http://bower.io "Package Manager for the web"
+[livereload]: https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=0CCkQFjABahUKEwjKvo7xmpHGAhVUGZIKHV6rABM&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Flivereload%2Fjnihajbhpnppcggbcgedagnkighmdlei%3Fhl%3Den&ei=PoN-VcqnK9SyyATe1oKYAQ&usg=AFQjCNE3uLWl-7EsJ9SPxfbqp4JErdhiTQ&bvm=bv.95515949,d.aWw "LiveReload plugin for automatically refresing the page on change"
